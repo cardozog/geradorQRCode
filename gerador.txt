@@ -1,0 +1,44 @@
+
+"""import qrcode
+from tkinter import *
+from tkinter import filedialog as dlg
+
+
+  
+
+
+
+
+janela = Tk()
+janela.title("Gerador de QR CODE")
+janela.geometry("600x480")
+
+texto = Label(janela, text="Link")
+texto.grid(column=0, row=0, padx=10, pady=5)
+
+entradaLink = Entry(janela,width=80)
+entradaLink.grid(column=0, row=1, padx=20, pady=5)
+path = dlg.askopenfilename()
+
+nomeArquivo = Label(janela, text="Nome do arquivo")
+nomeArquivo.grid(column=0, row=2, padx=20, pady=5)
+
+entradaNome = Entry(janela,width=80)
+entradaNome.grid(column=0, row=3, padx=20, pady=5)
+
+nome = entradaNome.get()
+link =entradaLink.get()
+
+codigo = qrcode.make(link)
+
+
+
+botao = Button(janela, text="Gerar QR CODE",command=codigo.save(nome+".jpg"))
+botao.grid(column=0, row=4, padx=10 , pady=10)
+
+
+
+
+
+janela.mainloop()
+"""
