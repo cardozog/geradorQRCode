@@ -1,6 +1,7 @@
+import os
 import qrcode
 from tkinter import * 
-from tkinter.filedialog import askdirectory,asksaveasfile
+from tkinter.filedialog import askdirectory
 from tkinter.messagebox import showerror,showinfo
 
 def center(win):
@@ -35,31 +36,38 @@ def center(win):
 
 
 def directory():
+
     # diretorio selecionado pelo usuario
-    filepath= asksaveasfile(mode="w",title="",defaultextension=".jpg")
+    filepath= askdirectory(title="Selecione a pasta: ")
+    if filepath =="":
+        return
     return filepath
 
 def criarQR():
     
     nomeArquivo = nome.get()
-    
-
     if (nomeArquivo=="" or nomeArquivo ==" "):
         showerror("ERRO","Insira um nome válido no nome do arquivo")
     else:
-        nomeArquivo +=".jpg"
         rota = directory()
-        codigo = qrcode.make(link.get())
-        if(codigo.save(rota+"/"+nomeArquivo)==True):
-            showinfo("QR Code","QR Code criado com sucesso!")
+        if rota !=None:
+            rotaNova = rota+"/"+nomeArquivo+".jpg"
+            if (rota ==None):
+                showerror("ERRO","Insira um nome válido no nome do arquivo")
+            else:
+                qr=qrcode.make(link.get())
+                if(os.path.exists(rotaNova)==False):
+                    qr.save(rotaNova)
+                    showinfo("QR Code","QR Code criado com sucesso!")
+                else:
+                    showerror("ERRO","Arquivo já existente, escolha outro nome!")
 
-
-
-texto= str
+    
 
 janela = Tk()
-janela.title("Validar resposta")
-janela.geometry("640x320")
+janela.title("Gerador de QRCode ")
+janela.iconbitmap(None)
+janela.geometry("640x200")
 janela.resizable(0,0)
 janela.configure(bg="#ECECEC")
 center(janela)
@@ -88,10 +96,10 @@ entradaNome.grid(column=1, row=1, padx=5, pady=5)
 #   label
 #labelSalvar= Label(janela, text="Salvar em: ",bg="#ECECEC",fg="black",font=("11"))
 #labelSalvar.grid(column=0, row=2, padx=15, pady=5)
-
 #   BOTAO CAMINHO
 #botaoCaminho = Button(janela, text="Salvar...",command=directory(teste))
 #botaoCaminho.grid(column=2, row=2, padx=0, pady=5)
+
 
 # BOTAO CRIAR QR CODE
 botaoCriar = Button(janela,height=2,width=35,text="Criar QR Code",command=criarQR)
